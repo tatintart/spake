@@ -1,0 +1,95 @@
+spake()
+Prgm
+Local t,s,x,y,a,b,n,i,j,k,ch,vit
+t={")",/* différents vaisseaux */}
+a=1
+b=1
+s={"rapide","lent"}
+ClrIO
+Disp " "
+Dialog
+Title "Spake vX.X"
+DropDown "Vaisseau  ",t,a
+DropDown "Vitesse  ",s,b
+Text "Controles : ..."
+EndDlog
+ch=t[a]
+vit={1,3}[b]
+a=newMat(21,7)
+t=0;s=0;y=3;
+Lbl newtab
+t=t+1
+x=0
+Fill 0,a
+ClrIO
+For i,0,21
+Output 0,i*6,"#"
+Output 56,i*6,"#"
+EndFor
+For j,0,7
+Output j*8,0,"#"
+Output j*8,22*6,"#"
+EndFor
+n=int(rand(10)+t/2)
+For k,0,n
+i=int(rand(15)+5)
+j=int(rand(6))
+Output j*8,i*6,"+"
+a[i,j]=1
+EndFor
+n=int(11)
+For k,0,n
+i=int(rand(20)+1)
+j=int(rand(6))
+Output j*8,i*6,"x"
+a[i,j]=2
+EndFor
+Output 8*8,6,t
+Lbl mainloop
+k=getkey()
+If k!=0 Then
+If k=338 and y>1
+y=y-1
+If k=344 and y<6
+y=y+1
+If k=264 Then
+Output 8*8,100,"Pause"
+Pause
+Output 8*8,100,"     "
+EndIf
+If k=265 Then
+DispHome
+ClrHome
+Stop
+Endif
+Endif
+x=x+1
+If x>21
+Goto newtab
+Output y*8,x*6,ch
+h=a[x,y]
+s=s+10*t+(3-b)*10
+For b,0,vit
+Output 8*8,30,s
+EndFor
+If k=0
+Goto mainloop
+If k=2 Then
+s=s+500*t
+Goto mainloop
+Endif
+Try
+If main\srecord=int(main\srecord) Then
+Unarchiv main\srecord
+Endif
+Else
+main\srecord=0
+EndTry
+Output y*8,x*6,"*"
+Output 56,30,main\srecord
+If s>main\srecord Then
+main\srecord
+Output 1,42," yeha !! "
+Endif
+Archive main\srecord
+EndPrgm
